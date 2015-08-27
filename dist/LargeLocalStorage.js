@@ -2,7 +2,7 @@
 	var undefined = {}.a;
 
 	function definition(Q) {
-	
+
 
 /**
 @author Matt Crinklaw-Vogt
@@ -70,7 +70,7 @@ var abstractPipeline = {
 	},
 
  	/**
- 	Add the handler with the given name after the 
+ 	Add the handler with the given name after the
  	handler specified by target.  Target can be a handler
  	name or a handler instance.
  	*/
@@ -219,7 +219,7 @@ var utils = (function() {
 
 		splitAttachmentPath: function(path) {
 			var parts = path.split('/');
-			if (parts.length == 1) 
+			if (parts.length == 1)
 				parts.unshift('__nodoc__');
 			return parts;
 		},
@@ -427,7 +427,7 @@ var FilesystemAPIProvider = (function(Q) {
 			function(entry) {
 				var reader = entry.createReader();
 				reader.readEntries(function(entries) {
-					var latch = 
+					var latch =
 					utils.countdown(entries.length, function() {
 						if (!failed)
 							deferred.resolve();
@@ -707,7 +707,7 @@ var IndexedDBProvider = (function(Q) {
 			var finalDeferred = Q.defer();
 
 			var transaction = this._db.transaction(['files', 'attachments'], 'readwrite');
-			
+
 			var del = transaction.objectStore('files').delete(docKey);
 
 			del.onsuccess = function(e) {
@@ -970,14 +970,14 @@ var IndexedDBProvider = (function(Q) {
 			request.onerror = function (event) {
 				deferred.reject(event);
 			};
-		 
+
 			request.onsuccess = function (event) {
 				var db = request.result;
-		 
+
 				db.onerror = function (event) {
 					console.log(event);
 				};
-				
+
 				// Chrome workaround
 				if (db.setVersion) {
 					if (db.version != dbVersion) {
@@ -994,7 +994,7 @@ var IndexedDBProvider = (function(Q) {
 					deferred.resolve(new IDB(db));
 				}
 			}
-			
+
 			request.onupgradeneeded = function (event) {
 				createObjectStore(event.target.result);
 			};
@@ -1085,7 +1085,7 @@ var WebSQLProvider = (function(Q) {
 		getAttachment: function(fname, akey) {
 			var deferred = Q.defer();
 
-			this._db.transaction(function(tx){ 
+			this._db.transaction(function(tx){
 				tx.executeSql('SELECT value FROM attachments WHERE fname = ? AND akey = ?',
 				[fname, akey],
 				function(tx, res) {
@@ -1341,7 +1341,7 @@ var LargeLocalStorage = (function(Q) {
 	}
 
 	function handleDataMigration(storageInstance, config, previousProviderType, currentProivderType) {
-		var previousProviderType = 
+		var previousProviderType =
 			sessionMeta[config.name] && sessionMeta[config.name].lastStorageImpl;
 		if (config.migrate) {
 			if (previousProviderType != currentProivderType
@@ -1361,13 +1361,13 @@ var LargeLocalStorage = (function(Q) {
 	}
 
 	/**
-	 * 
-	 * LargeLocalStorage (or LLS) gives you a large capacity 
+	 *
+	 * LargeLocalStorage (or LLS) gives you a large capacity
 	 * (up to several gig with permission from the user)
 	 * key-value store in the browser.
 	 *
 	 * For storage, LLS uses the [FilesystemAPI](https://developer.mozilla.org/en-US/docs/WebGuide/API/File_System)
-	 * when running in Chrome and Opera, 
+	 * when running in Chrome and Opera,
 	 * [IndexedDB](https://developer.mozilla.org/en-US/docs/IndexedDB) in Firefox and IE
 	 * and [WebSQL](http://www.w3.org/TR/webdatabase/) in Safari.
 	 *
@@ -1375,7 +1375,7 @@ var LargeLocalStorage = (function(Q) {
 	 * update to take advantage of that storage implementation.
 	 *
 	 *
-	 * Upon construction a LargeLocalStorage (LLS) object will be 
+	 * Upon construction a LargeLocalStorage (LLS) object will be
 	 * immediately returned but not necessarily immediately ready for use.
 	 *
 	 * A LLS object has an `initialized` property which is a promise
@@ -1421,11 +1421,11 @@ var LargeLocalStorage = (function(Q) {
 	 *		// LLS's with different names are independent.
 	 *		name: 'myStorage'
 	 *
-	 *		// the following is an optional param 
+	 *		// the following is an optional param
 	 *		// that is useful for debugging.
 	 *		// force LLS to use a specific storage implementation
 	 *		// forceProvider: 'IndexedDB' or 'WebSQL' or 'FilesystemAPI'
-	 *		
+	 *
 	 *		// These parameters can be used to migrate data from one
 	 *		// storage implementation to another
 	 *		// migrate: LargeLocalStorage.copyOldData,
@@ -1496,7 +1496,7 @@ var LargeLocalStorage = (function(Q) {
 		* @example
 		*	// may or may not be true
 		*	storage.ready();
-		*	
+		*
 		*	storage.initialized.then(function() {
 		*		// always true
 		*		storage.ready();
@@ -1569,7 +1569,7 @@ var LargeLocalStorage = (function(Q) {
 		*	storage.clear().then(function() {
 		*		alert('all data has been removed');
 		*	});
-		* 
+		*
 		* @returns {promise} resolve when clear completes, rejected if clear fails.
 		*/
 		clear: function() {
@@ -1672,7 +1672,7 @@ var LargeLocalStorage = (function(Q) {
 		* 	})
 		*
 		* This is preferrable to getting the attachment and then getting the
-		* URL via `createObjectURL` (on some systems) as LLS can take advantage of 
+		* URL via `createObjectURL` (on some systems) as LLS can take advantage of
 		* lower level details to improve performance.
 		*
 		* @method getAttachmentURL
@@ -1740,7 +1740,7 @@ var LargeLocalStorage = (function(Q) {
 		* storage system.
 		*
 		* This is akin to `URL.revokeObjectURL(url)`
-		* URLs that come from `getAttachmentURL` or `getAllAttachmentURLs` 
+		* URLs that come from `getAttachmentURL` or `getAllAttachmentURLs`
 		* should be revoked by LLS and not `URL.revokeObjectURL`
 		*
 		* @example
@@ -1865,7 +1865,7 @@ var LargeLocalStorage = (function(Q) {
 	};
 
 	LargeLocalStorage._sessionMeta = sessionMeta;
-	
+
 	var availableProviders = [];
 	Object.keys(providers).forEach(function(potentialProvider) {
 		if (providers[potentialProvider].isAvailable())
@@ -1881,7 +1881,7 @@ var LargeLocalStorage = (function(Q) {
 }
 
 if (typeof define === 'function' && define.amd) {
-	define(['Q'], definition);
+	define(['q'], definition);
 } else {
 	glob.LargeLocalStorage = definition.call(glob, Q);
 }
