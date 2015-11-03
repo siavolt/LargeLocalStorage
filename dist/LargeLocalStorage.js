@@ -328,27 +328,7 @@ var FilesystemAPIProvider = (function(Q) {
 			path = this._prefix + path;
 			this._fs.root.getFile(path, {}, function(fileEntry) {
 				fileEntry.file(function(file) {
-					var reader = new FileReader();
-
-					reader.onloadend = function(e) {
-						var data = e.target.result;
-						var err;
-						if (options && options.json) {
-							try {
-								data = JSON.parse(data);
-							} catch(e) {
-								err = new Error('unable to parse JSON for ' + path);
-							}
-						}
-
-						if (err) {
-							deferred.reject(err);
-						} else {
-							deferred.resolve(data);
-						}
-					};
-
-					reader.readAsText(file);
+				    deferred.resolve(file);
 				}, makeErrorHandler(deferred));
 			}, makeErrorHandler(deferred));
 
