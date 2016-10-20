@@ -5,7 +5,7 @@ var FilesystemAPIProvider = (function(Q) {
 		// TODO: normalize the error so
 		// we can handle it upstream
 		return function(e) {
-			if (e.code == 1) {
+			if (e.name == 'NotFoundError') {
 				deferred.resolve(undefined);
 			} else {
 				if (finalDeferred)
